@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pomodoro Timer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">Simple Pomodoro</p>
+      <h1>Stay on track, one session at a time</h1>
+      <p class="lede">Focus, break, repeat. Keep your tasks and progress in one calm view.</p>
+    </div>
+    <div class="header-actions">
+      <button id="test-alarm-btn" class="ghost">Test alarm</button>
+      <button id="notification-permission-btn" class="ghost">Enable notifications</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="card timer-card">
+      <div class="mode-switch">
+        <button data-mode="focus" class="mode-btn active">Focus</button>
+        <button data-mode="short_break" class="mode-btn">Short Break</button>
+        <button data-mode="long_break" class="mode-btn">Long Break</button>
+      </div>
+      <div class="timer-display">
+        <div id="tab-title-helper" aria-live="polite" class="sr-only"></div>
+        <div id="time-remaining">25:00</div>
+        <p id="active-task-label" class="muted">No active task</p>
+      </div>
+      <div class="controls">
+        <button id="start-btn" class="primary">Start</button>
+        <button id="pause-btn" class="ghost">Pause</button>
+        <button id="resume-btn" class="ghost">Resume</button>
+        <button id="skip-btn" class="danger ghost">Skip</button>
+      </div>
+      <div id="session-banner" class="banner hidden" role="status"></div>
+    </section>
+
+    <section class="card tasks-card">
+      <div class="card-header">
+        <h2>Tasks</h2>
+        <div class="task-actions">
+          <button id="toggle-task-panel" class="ghost small">Collapse</button>
+          <button id="clear-completed" class="ghost small">Clear completed</button>
+        </div>
+      </div>
+      <form id="task-form" class="task-form">
+        <label>
+          Task
+          <input type="text" id="task-title" placeholder="Write next section" required>
+        </label>
+        <label>
+          Notes (optional)
+          <input type="text" id="task-notes" placeholder="Details or link">
+        </label>
+        <label>
+          Pomodoro estimate
+          <input type="number" id="task-estimate" min="1" max="12" value="1" required>
+        </label>
+        <button type="submit" class="primary full">Add task</button>
+      </form>
+      <ul id="task-list" class="task-list"></ul>
+    </section>
+
+    <section class="card settings-card">
+      <div class="card-header">
+        <h2>Settings</h2>
+      </div>
+      <div class="settings-grid">
+        <label>
+          Focus minutes
+          <input type="number" id="focus-minutes" min="1" max="120" value="25">
+        </label>
+        <label>
+          Short break minutes
+          <input type="number" id="short-break-minutes" min="1" max="60" value="5">
+        </label>
+        <label>
+          Long break minutes
+          <input type="number" id="long-break-minutes" min="1" max="90" value="15">
+        </label>
+        <label>
+          Long break interval (focus sessions)
+          <input type="number" id="long-break-interval" min="1" max="10" value="4">
+        </label>
+        <label class="inline">
+          <input type="checkbox" id="auto-start-breaks">
+          Auto start breaks
+        </label>
+        <label class="inline">
+          <input type="checkbox" id="auto-start-focus">
+          Auto start focus
+        </label>
+        <label>
+          Alarm volume
+          <input type="range" id="alarm-volume" min="0" max="1" step="0.05" value="0.6">
+        </label>
+        <label>
+          Alarm tone
+          <select id="alarm-sound">
+            <option value="beep">Beep</option>
+            <option value="soft">Soft pulse</option>
+          </select>
+        </label>
+        <label class="inline">
+          <input type="checkbox" id="notification-opt-in">
+          Enable browser notifications
+        </label>
+        <label class="inline">
+          <input type="checkbox" id="auto-increment">
+          Auto-increment active task on focus completion
+        </label>
+      </div>
+      <button id="save-settings" class="primary full">Save settings</button>
+    </section>
+
+    <section class="card progress-card">
+      <div class="card-header">
+        <h2>Today</h2>
+        <button id="reset-day" class="ghost small">Reset today</button>
+      </div>
+      <div class="progress-grid">
+        <div>
+          <p class="muted">Pomodoros completed</p>
+          <p class="metric" id="metric-pomodoros">0</p>
+        </div>
+        <div>
+          <p class="muted">Focused minutes</p>
+          <p class="metric" id="metric-minutes">0</p>
+        </div>
+        <div>
+          <p class="muted">Estimated finish</p>
+          <p class="metric" id="metric-finish">--</p>
+        </div>
+        <div>
+          <p class="muted">Next suggested mode</p>
+          <p class="metric" id="metric-next-mode">Focus</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
